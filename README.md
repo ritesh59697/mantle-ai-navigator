@@ -1,28 +1,128 @@
 # Mantle AI Navigator
 
-Mantle AI Navigator is an AI-powered dashboard that analyzes Mantle network activity and generates insights using LLMs.
+AI-powered onchain intelligence dashboard for the Mantle ecosystem.
+
+Mantle AI Navigator analyzes real-time blockchain activity and converts raw data into actionable insights using AI.
+
+Built to explore the future of intelligent onchain agents.
+
+---
+
+## Overview
+
+Mantle AI Navigator combines blockchain data with AI analysis to provide a clear view of network activity.
+
+Instead of manually reading block explorers, users can instantly understand what is happening on the network.
+
+The dashboard fetches live Mantle blockchain data and uses AI models to generate insights about:
+
+* network activity
+* wallet behavior
+* market signals
+* potential alpha opportunities
+
+---
 
 ## Features
 
-- real-time mantle network activity dashboard  
-- ai-generated blockchain insights  
-- defi activity monitoring  
-- wallet activity analysis  
+### Real-Time Mantle Network Metrics
+
+Track important network indicators such as:
+
+* Active wallets
+* DeFi volume
+* Network transaction speed
+
+---
+
+### Recent Onchain Activity
+
+Monitor the latest transactions happening on the Mantle network.
+
+The dashboard fetches real block data from Mantle RPC and displays recent transactions including transfers and contract interactions.
+
+---
+
+### AI Alpha Signals
+
+An AI model analyzes Mantle network activity and generates insights such as:
+
+* increasing wallet activity
+* liquidity trends
+* unusual network behavior
+
+This helps users quickly identify potential signals.
+
+---
+
+### Wallet Analyzer
+
+Users can input a wallet address and receive an AI-generated analysis including:
+
+* transaction activity
+* wallet behavior insights
+* activity profile
+
+---
+
+## Architecture
+
+Browser Dashboard
+↓
+Next.js Frontend
+↓
+API Routes
+
+* /api/mantle-data
+* /api/wallet-analyze
+* /api/analyze
+
+↓
+
+External Services
+
+* Mantle RPC
+* Groq AI
+
+---
 
 ## Tech Stack
 
-- next.js  
-- groq ai api  
-- vercel deployment  
+* Next.js
+* TypeScript
+* Mantle RPC
+* Groq AI (LLaMA model)
+* Vercel deployment
 
-## How it Works
-
-the application fetches mantle network activity data and sends it to an ai model which generates short insights about the network state. this helps users quickly understand trends in defi activity, wallet growth and transactions.
+---
 
 ## Live Demo
 
-mantle-ai-navigator-q75f.vercel.app
+https://mantle-ai-navigator-q75f.vercel.app
+
+---
+
+## Future Improvements
+
+* Whale movement tracker
+* Protocol analytics dashboard
+* Live Mantle transaction stream
+* AI-powered trading signals
+* Mantle ecosystem insights
+
+---
 
 ## Author
 
-built by ritesh
+Built by **Ritesh**
+
+Twitter/X
+https://x.com/Ritesh5969
+
+---
+
+## Vision
+
+AI will become the interface for blockchain data.
+
+Mantle AI Navigator explores how intelligent agents can help users navigate onchain ecosystems faster and understand blockchain activity more efficiently.
