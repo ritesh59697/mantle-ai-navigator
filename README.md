@@ -21,7 +21,7 @@ the application fetches mantle network activity data and sends it to an ai model
 
 ## Live Demo
 
-coming soon
+mantle-ai-navigator-q75f.vercel.app
 
 ## Author
 
