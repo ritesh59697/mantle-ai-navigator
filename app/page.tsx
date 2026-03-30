@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react'
 
 export default function Dashboard() {
   const [data, setData] = useState<any>(null)
-  const [analysis, setAnalysis] = useState('')
-  const [loading, setLoading] = useState(true)
+  const [analysis, setAnalysis] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
     async function loadDashboard() {
@@ -37,24 +37,24 @@ export default function Dashboard() {
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'16px',marginBottom:'20px'}}>
         <div style={{background:'#111',border:'1px solid #1a1a1a',borderRadius:'12px',padding:'20px'}}>
           <p style={{color:'#666',fontSize:'0.85rem'}}>Active Wallets</p>
-          <p style={{fontSize:'1.8rem',fontWeight:'bold',color:'#00ff88'}}>{data.walletActivity.activeWallets.toLocaleString()}</p>
-          <p style={{color:'#00ff88',fontSize:'0.85rem'}}>{data.walletActivity.change}</p>
+          <p style={{fontSize:'1.8rem',fontWeight:'bold',color:'#00ff88'}}>{data?.walletActivity?.activeWallets?.toLocaleString()}</p>
+          <p style={{color:'#00ff88',fontSize:'0.85rem'}}>{data?.walletActivity?.change}</p>
         </div>
         <div style={{background:'#111',border:'1px solid #1a1a1a',borderRadius:'12px',padding:'20px'}}>
           <p style={{color:'#666',fontSize:'0.85rem'}}>DeFi Volume</p>
-          <p style={{fontSize:'1.8rem',fontWeight:'bold',color:'#00ff88'}}>{data.defiVolume.total}</p>
-          <p style={{color:'#00ff88',fontSize:'0.85rem'}}>{data.defiVolume.change}</p>
+          <p style={{fontSize:'1.8rem',fontWeight:'bold',color:'#00ff88'}}>{data?.defiVolume?.total}</p>
+          <p style={{color:'#00ff88',fontSize:'0.85rem'}}>{data?.defiVolume?.change}</p>
         </div>
         <div style={{background:'#111',border:'1px solid #1a1a1a',borderRadius:'12px',padding:'20px'}}>
           <p style={{color:'#666',fontSize:'0.85rem'}}>Network Speed</p>
-          <p style={{fontSize:'1.8rem',fontWeight:'bold',color:'#00ff88'}}>{data.networkStats.tps}</p>
-          <p style={{color:'#00ff88',fontSize:'0.85rem'}}>{data.networkStats.blockTime}</p>
+          <p style={{fontSize:'1.8rem',fontWeight:'bold',color:'#00ff88'}}>{data?.networkStats?.tps}</p>
+          <p style={{color:'#00ff88',fontSize:'0.85rem'}}>{data?.networkStats?.blockTime}</p>
         </div>
       </div>
 
       <div style={{background:'#111',border:'1px solid #1a1a1a',borderRadius:'12px',padding:'24px',marginBottom:'20px'}}>
         <h2 style={{color:'#fff',fontSize:'1rem',marginBottom:'20px'}}>Recent Mantle Activity</h2>
-        {data.recentTransactions.map((tx, i) => (
+        {data?.recentTransactions?.map((tx: any, i: number) => (
           <div key={i} style={{display:'flex',justifyContent:'space-between',padding:'12px 0',borderBottom:'1px solid #1a1a1a'}}>
             <span style={{color:'#00ff88'}}>{tx.type}</span>
             <span>{tx.value}</span>
