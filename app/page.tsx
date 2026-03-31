@@ -14,7 +14,6 @@ export default function Dashboard() {
       const dataRes = await fetch('/api/mantle-data')
       const mantleData = await dataRes.json()
       setData(mantleData)
-
       const aiRes = await fetch('/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -41,144 +40,141 @@ export default function Dashboard() {
     setWalletLoading(false)
   }
 
-  const severityColor: any = { high: '#ff4444', medium: '#ffaa00', low: '#00ff88' }
-
- if (loading) return (
-    <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',height:'100vh',background:'#0a0a0a',fontFamily:'monospace',gap:'20px'}}>
-      <img 
-        src="https://assets.coingecko.com/coins/images/30980/small/token-logo.png" 
+  if (loading) return (
+    <div className="cyber-bg grid-lines" style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',height:'100vh',gap:'24px'}}>
+      <img
+        src="https://assets.coingecko.com/coins/images/30980/small/token-logo.png"
         alt="Mantle"
-        style={{width:'64px',height:'64px',borderRadius:'50%',animation:'pulse 1.5s ease-in-out infinite'}}
+        style={{width:'72px',height:'72px',borderRadius:'50%',animation:'pulse-glow 1.5s ease-in-out infinite'}}
       />
-      <p style={{color:'#00ff88',fontSize:'1.2rem',margin:'0'}}>Analyzing Mantle Network...</p>
-      <p style={{color:'#333',fontSize:'0.8rem',margin:'0'}}>Fetching live blockchain data</p>
+      <p className="neon-text" style={{fontSize:'1.2rem',letterSpacing:'0.2em'}}>ANALYZING MANTLE NETWORK...</p>
+      <p style={{color:'rgba(255,255,255,0.3)',fontSize:'0.75rem',letterSpacing:'0.15em'}}>FETCHING LIVE BLOCKCHAIN DATA</p>
     </div>
   )
 
   return (
-    <div style={{maxWidth:'960px',margin:'0 auto',padding:'40px 20px',fontFamily:'monospace',background:'#0a0a0a',minHeight:'100vh',color:'#fff'}}>
+    <div className="cyber-bg grid-lines" style={{minHeight:'100vh',padding:'40px 20px'}}>
+      <div style={{maxWidth:'1000px',margin:'0 auto'}}>
 
-      <div style={{display:'flex',alignItems:'center',gap:'12px',marginBottom:'4px'}}>
-  <img 
-    src="https://assets.coingecko.com/coins/images/30980/small/token-logo.png"
-    alt="Mantle" 
-    style={{width:'40px',height:'40px',borderRadius:'50%'}}
-  />
-  <h1 style={{fontSize:'2rem',color:'#00ff88',margin:'0'}}>Mantle AI Navigator</h1>
-</div>
-      <p style={{color:'#444',marginBottom:'40px',fontSize:'0.85rem'}}>
-        Block #{data?.blockNumber?.toLocaleString()} · Live Mantle Network Analysis
-      </p>
-
-      {/* Metrics */}
-      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'16px',marginBottom:'24px'}}>
-        {[
-          { label:'Active Wallets', value:data?.walletActivity?.activeWallets?.toLocaleString(), sub:data?.walletActivity?.change },
-          { label:'DeFi Volume', value:data?.defiVolume?.total, sub:data?.defiVolume?.change },
-          { label:'Network Speed', value:data?.networkStats?.tps, sub:data?.networkStats?.blockTime }
-        ].map((m, i) => (
-          <div key={i} style={{background:'#111',border:'1px solid #1a1a1a',borderRadius:'12px',padding:'20px'}}>
-            <p style={{color:'#555',fontSize:'0.8rem',marginBottom:'8px'}}>{m.label}</p>
-            <p style={{fontSize:'1.6rem',fontWeight:'bold',color:'#00ff88',margin:'4px 0'}}>{m.value}</p>
-           <p style={{color:'#4ade80',background:'#052e16',padding:'2px 8px',borderRadius:'4px',fontSize:'0.75rem',display:'inline-block'}}>{m.sub}</p>
+        {/* Header */}
+        <div style={{textAlign:'center',marginBottom:'52px'}}>
+          <div style={{display:'flex',justifyContent:'center',alignItems:'center',gap:'16px',marginBottom:'14px'}}>
+            <img
+              src="https://assets.coingecko.com/coins/images/30980/small/token-logo.png"
+              alt="Mantle"
+              style={{width:'52px',height:'52px',borderRadius:'50%',boxShadow:'0 0 24px rgba(34,197,94,0.7)'}}
+            />
+            <h1 style={{fontSize:'3rem',fontWeight:'bold',color:'#22c55e',textShadow:'0 0 20px rgba(34,197,94,0.8),0 0 40px rgba(34,197,94,0.4)',letterSpacing:'0.04em'}}>
+              Mantle AI Navigator
+            </h1>
           </div>
-        ))}
-      </div>
+          <p style={{color:'rgba(255,255,255,0.4)',fontSize:'0.8rem',letterSpacing:'0.25em',textTransform:'uppercase'}}>
+            Block #{data?.blockNumber?.toLocaleString()} · Live Mantle Network Analysis
+          </p>
+        </div>
 
-      {/* Recent Activity */}
-      <div style={{background:'#111',border:'1px solid #1a1a1a',borderRadius:'12px',padding:'24px',marginBottom:'24px'}}>
-        <h2 style={{color:'#fff',fontSize:'0.95rem',marginBottom:'16px'}}>📡 Recent Mantle Activity</h2>
-        {data?.recentTransactions?.map((tx: any, i: number) => (
-        <div key={i} style={{display:'grid',gridTemplateColumns:'140px 180px 1fr 80px',alignItems:'center',padding:'10px 0',borderBottom:'1px solid #1a1a1a',gap:'8px'}}>
-  <span style={{color:'#00ff88',fontSize:'0.85rem'}}>{tx.type}</span>
-  <span style={{color:'#fff',fontSize:'0.85rem'}}>{tx.value}</span>
-  <span style={{color:'#333',fontSize:'0.8rem'}}>{tx.hash}</span>
-  <span style={{color:'#444',fontSize:'0.8rem',textAlign:'right'}}>{tx.time}</span>
-</div>
-        ))}
-      </div>
-
-      {/* AI Alpha Signals */}
-      <div style={{background:'#0d1f17',border:'1px solid #00ff8822',borderRadius:'12px',padding:'24px',marginBottom:'24px'}}>
-        <h2 style={{color:'#fff',fontSize:'0.95rem',marginBottom:'16px'}}>🤖 AI Alpha Signals</h2>
-        <p style={{color:'#888',fontSize:'0.9rem',marginBottom:'20px',lineHeight:'1.7'}}>{analysis?.summary}</p>
-        <div style={{display:'flex',flexDirection:'column',gap:'12px'}}>
-          {analysis?.signals?.map((signal: any, i: number) => (
-            <div key={i} style={{display:'flex',alignItems:'flex-start',gap:'12px',background:'#111',borderRadius:'8px',padding:'12px'}}>
-              <span style={{color:severityColor[signal.severity]||'#00ff88',fontSize:'0.75rem',fontWeight:'bold',minWidth:'50px',marginTop:'2px'}}>
-                {signal.severity?.toUpperCase()}
-              </span>
-              <div>
-                <span style={{color:'#00ff88',fontSize:'0.8rem'}}>[{signal.type}] </span>
-                <span style={{color:'#ccc',fontSize:'0.9rem'}}>{signal.message}</span>
-              </div>
+        {/* Metrics */}
+        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'20px',marginBottom:'24px'}}>
+          {[
+            { label:'Active Wallets', value:data?.walletActivity?.activeWallets?.toLocaleString(), sub:data?.walletActivity?.change },
+            { label:'DeFi Volume', value:data?.defiVolume?.total, sub:data?.defiVolume?.change },
+            { label:'Network Speed', value:data?.networkStats?.tps, sub:data?.networkStats?.blockTime }
+          ].map((m, i) => (
+            <div key={i} className="metric-card" style={{padding:'28px 24px',textAlign:'center'}}>
+              <p className="metric-label">{m.label}</p>
+              <p className="metric-number">{m.value}</p>
+              <div className="metric-sub">{m.sub}</div>
             </div>
           ))}
         </div>
-      </div>
 
-      {/* Wallet Analyzer */}
-      <div style={{background:'#111',border:'1px solid #1a1a1a',borderRadius:'12px',padding:'24px'}}>
-        <h2 style={{color:'#fff',fontSize:'0.95rem',marginBottom:'16px'}}>🔍 Wallet Analyzer</h2>
-        <div style={{display:'flex',gap:'12px',marginBottom:'20px'}}>
-          <input
-            type="text"
-            placeholder="Enter Mantle wallet address (0x...)"
-            value={wallet}
-            onChange={(e) => setWallet(e.target.value)}
-            style={{flex:1,background:'#0a0a0a',border:'1px solid #222',borderRadius:'8px',padding:'12px',color:'#fff',fontFamily:'monospace',fontSize:'0.85rem'}}
-          />
-          <button
-            onClick={analyzeWallet}
-            disabled={walletLoading}
-            style={{background:'#00ff88',color:'#000',border:'none',borderRadius:'8px',padding:'12px 20px',fontFamily:'monospace',fontWeight:'bold',cursor:'pointer',fontSize:'0.85rem'}}
-          >
-            {walletLoading ? 'Analyzing...' : 'Analyze'}
-          </button>
+        {/* Recent Activity */}
+        <div className="glass-card" style={{padding:'28px',marginBottom:'24px'}}>
+          <p className="section-title">📡 Recent Mantle Activity</p>
+          {data?.recentTransactions?.map((tx: any, i: number) => (
+            <div key={i} className="tx-row">
+              <span style={{color:'#4ade80',fontSize:'0.82rem',fontWeight:'bold'}}>{tx.type}</span>
+              <span style={{color:'#ffffff',fontSize:'0.82rem'}}>{tx.value}</span>
+              <span style={{color:'rgba(255,255,255,0.35)',fontSize:'0.78rem',fontFamily:'monospace'}}>{tx.hash}</span>
+              <span style={{color:'rgba(255,255,255,0.3)',fontSize:'0.75rem',textAlign:'right'}}>{tx.time}</span>
+            </div>
+          ))}
         </div>
 
-        {walletResult && !walletResult.error && (
-          <div style={{background:'#0a0a0a',borderRadius:'8px',padding:'16px'}}>
-            <div style={{display:'flex',gap:'24px',marginBottom:'16px',flexWrap:'wrap'}}>
-              <div>
-                <p style={{color:'#555',fontSize:'0.75rem'}}>Balance</p>
-                <div style={{display:'flex',alignItems:'center',gap:'6px'}}>
-  <img 
-    src="https://assets.coingecko.com/coins/images/30980/small/token-logo.png"
-    style={{width:'16px',height:'16px',borderRadius:'50%'}}
-  />
-  <p style={{color:'#00ff88',fontWeight:'bold',margin:'0'}}>{walletResult.balance}</p>
-</div>
-              </div>
-              <div>
-                <p style={{color:'#555',fontSize:'0.75rem'}}>Total Transactions</p>
-                <p style={{color:'#00ff88',fontWeight:'bold'}}>{walletResult.txCount}</p>
-              </div>
-            </div>
-            <p style={{color:'#aaa',lineHeight:'1.8',fontSize:'0.9rem'}}>{walletResult.analysis}</p>
+        {/* Wallet Analyzer */}
+        <div className="glass-card" style={{padding:'28px',marginBottom:'24px'}}>
+          <p className="section-title">🔍 Wallet Analyzer</p>
+          <p style={{color:'rgba(255,255,255,0.5)',fontSize:'0.82rem',marginBottom:'16px',letterSpacing:'0.02em'}}>
+            Enter any Mantle wallet address to get instant on-chain analysis
+          </p>
+          <div style={{display:'flex',gap:'12px',marginBottom:'20px'}}>
+            <input
+              type="text"
+              placeholder="0x... Enter Mantle wallet address"
+              value={wallet}
+              onChange={(e) => setWallet(e.target.value)}
+              className="cyber-input"
+            />
+            <button onClick={analyzeWallet} disabled={walletLoading} className="glow-button">
+              {walletLoading ? 'ANALYZING...' : 'ANALYZE'}
+            </button>
           </div>
-        )}
-        {walletResult?.error && (
-          <p style={{color:'#ff4444'}}>Error: {walletResult.error}</p>
-        )}
-      </div> {/* Footer */}
-<div style={{marginTop:'40px',paddingTop:'24px',borderTop:'1px solid #1a1a1a',display:'flex',justifyContent:'center',alignItems:'center'}}>
-  <a 
-    href="https://x.com/Ritesh5969" 
-    target="_blank"
-    rel="noopener noreferrer"
-    style={{display:'flex',alignItems:'center',gap:'10px',textDecoration:'none',background:'#111',border:'1px solid #1a1a1a',borderRadius:'50px',padding:'8px 16px 8px 8px'}}
-  >
-    <img 
-      src="https://pbs.twimg.com/profile_images/1944572785373728768/Qc4iOnla_400x400.jpg"
-      alt="Ritesh"
-      style={{width:'22px',height:'22px',borderRadius:'50%',border:'1px solid #00ff88'}}
-    />
-    <span style={{color:'#888',fontSize:'0.75rem'}}>Built by </span>
-    <span style={{color:'#00ff88',fontSize:'0.75rem',fontWeight:'bold'}}>@Ritesh5969</span>
-  </a>
-</div>
 
+          {walletResult && !walletResult.error && (
+            <div style={{background:'rgba(0,0,0,0.4)',borderRadius:'12px',padding:'20px',border:'1px solid rgba(34,197,94,0.15)'}}>
+              <div style={{display:'flex',gap:'40px',marginBottom:'16px',flexWrap:'wrap'}}>
+                <div>
+                  <p style={{color:'rgba(255,255,255,0.4)',fontSize:'0.7rem',letterSpacing:'0.15em',textTransform:'uppercase',marginBottom:'6px'}}>Balance</p>
+                  <div style={{display:'flex',alignItems:'center',gap:'8px'}}>
+                    <img src="https://assets.coingecko.com/coins/images/30980/small/token-logo.png" style={{width:'18px',height:'18px',borderRadius:'50%'}} />
+                    <p style={{color:'#22c55e',fontWeight:'bold',fontSize:'1.1rem',textShadow:'0 0 8px rgba(34,197,94,0.5)'}}>{walletResult.balance}</p>
+                  </div>
+                </div>
+                <div>
+                  <p style={{color:'rgba(255,255,255,0.4)',fontSize:'0.7rem',letterSpacing:'0.15em',textTransform:'uppercase',marginBottom:'6px'}}>Total Transactions</p>
+                  <p style={{color:'#22c55e',fontWeight:'bold',fontSize:'1.1rem',textShadow:'0 0 8px rgba(34,197,94,0.5)'}}>{walletResult.txCount}</p>
+                </div>
+              </div>
+              <p style={{color:'rgba(255,255,255,0.75)',fontSize:'0.85rem',lineHeight:'1.8'}}>{walletResult.analysis}</p>
+            </div>
+          )}
+          {walletResult?.error && (
+            <p style={{color:'#ef4444',fontSize:'0.85rem'}}>⚠ {walletResult.error}</p>
+          )}
+        </div>
+
+        {/* AI Alpha Signals */}
+        <div className="glass-card" style={{padding:'28px',marginBottom:'24px',borderColor:'rgba(34,197,94,0.3)'}}>
+          <p className="section-title">🤖 AI Alpha Signals</p>
+          <p style={{color:'rgba(255,255,255,0.75)',fontSize:'0.88rem',lineHeight:'1.85',marginBottom:'24px'}}>
+            {analysis?.summary}
+          </p>
+          <div style={{display:'flex',flexDirection:'column',gap:'10px'}}>
+            {analysis?.signals?.map((signal: any, i: number) => (
+              <div key={i} className={`signal-row ${signal.severity === 'high' ? 'signal-high' : signal.severity === 'medium' ? 'signal-medium' : 'signal-low'}`}>
+                <span className={signal.severity === 'high' ? 'badge-high' : signal.severity === 'medium' ? 'badge-medium' : 'badge-low'}>
+                  {signal.severity?.toUpperCase()}
+                </span>
+                <div>
+                  <span style={{color:'#4ade80',fontSize:'0.82rem',fontWeight:'bold'}}>[{signal.type}] </span>
+                  <span style={{color:'rgba(255,255,255,0.8)',fontSize:'0.85rem'}}>{signal.message}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div style={{paddingTop:'24px',borderTop:'1px solid rgba(34,197,94,0.1)',display:'flex',justifyContent:'center'}}>
+          <a href="https://x.com/Ritesh5969" target="_blank" rel="noopener noreferrer"
+            style={{display:'flex',alignItems:'center',gap:'10px',textDecoration:'none',background:'rgba(34,197,94,0.05)',border:'1px solid rgba(34,197,94,0.2)',borderRadius:'50px',padding:'8px 20px 8px 10px',transition:'all 0.2s ease'}}>
+            <img src="https://pbs.twimg.com/profile_images/1944572785373728768/Qc4iOnla_400x400.jpg" alt="Ritesh" style={{width:'28px',height:'28px',borderRadius:'50%',border:'1px solid rgba(34,197,94,0.5)'}} />
+            <span style={{color:'rgba(255,255,255,0.5)',fontSize:'0.78rem'}}>Built by </span>
+            <span style={{color:'#22c55e',fontSize:'0.78rem',fontWeight:'bold',textShadow:'0 0 8px rgba(34,197,94,0.4)'}}>@Ritesh5969</span>
+          </a>
+        </div>
+
+      </div>
     </div>
   )
 }
