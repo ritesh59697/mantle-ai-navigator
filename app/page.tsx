@@ -414,6 +414,70 @@ export default function Dashboard() {
           )}
 
         </div>
+        
+        {/* AI Alpha Signals */}
+
+<div
+  className="glass-card"
+  style={{padding:'28px',marginBottom:'24px',borderColor:'rgba(34,197,94,0.3)'}}
+>
+
+<p className="section-title">🤖 AI Alpha Signals</p>
+
+<p
+style={{
+color:'rgba(255,255,255,0.75)',
+fontSize:'0.88rem',
+lineHeight:'1.85',
+marginBottom:'24px'
+}}
+>
+{analysis?.summary}
+</p>
+
+<div style={{display:'flex',flexDirection:'column',gap:'10px'}}>
+
+{analysis?.signals?.map((signal:any,i:number)=>(
+  
+<div
+key={i}
+className={`signal-row ${
+signal.severity === 'high'
+? 'signal-high'
+: signal.severity === 'medium'
+? 'signal-medium'
+: 'signal-low'
+}`}
+>
+
+<span
+className={
+signal.severity === 'high'
+? 'badge-high'
+: signal.severity === 'medium'
+? 'badge-medium'
+: 'badge-low'
+}
+>
+{signal.severity?.toUpperCase()}
+</span>
+
+<div>
+<span style={{color:'#4ade80',fontSize:'0.82rem',fontWeight:'bold'}}>
+[{signal.type}]
+</span>
+
+<span style={{color:'rgba(255,255,255,0.8)',fontSize:'0.85rem'}}>
+{signal.message}
+</span>
+</div>
+
+</div>
+
+))}
+
+</div>
+</div>
 
         {/* Footer */}
         <div
